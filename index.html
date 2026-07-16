@@ -1,26 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>METAWIPE - Hacker Metadata Cleaner</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleanslate — Local Metadata Cleaner</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>⚡ METAWIPE ⚡</h1>
-        <p class="made-by">Made by Aryan Giri</p>
 
-        <input type="file" id="fileInput" multiple>
-        <button id="cleanBtn">Clean Metadata</button>
+  <div class="theme-switch" role="group" aria-label="Theme">
+    <button class="theme-btn" data-theme="paper" aria-label="Light theme">Light</button>
+    <button class="theme-btn" data-theme="ink" aria-label="Dark theme">Dark</button>
+    <button class="theme-btn" data-theme="sepia" aria-label="Eye-saver theme">Eye-saver</button>
+  </div>
 
-        <div id="output" class="output-console"></div>
-    </div>
+  <main class="app">
 
-    <!-- Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-    
-    <script src="script.js"></script>
+    <header class="hero">
+      <p class="eyebrow">Runs entirely in your browser · nothing leaves your device</p>
+      <h1>Strip what you<br>didn't mean to share.</h1>
+      <p class="lede">Photos carry GPS coordinates. PDFs carry author names, software fingerprints, and edit history. Cleanslate removes it locally — no upload, no server, no account.</p>
+    </header>
+
+    <section class="dropzone" id="dropzone">
+      <div class="redaction-bar" id="redactionBar" aria-hidden="true"></div>
+      <input type="file" id="fileInput" multiple hidden>
+      <div class="dropzone-content">
+        <p class="dropzone-title">Drop files here, or</p>
+        <button class="btn btn-primary" id="browseBtn">choose files</button>
+        <p class="dropzone-hint">Images: JPEG, PNG, WebP &nbsp;·&nbsp; Documents: PDF</p>
+      </div>
+    </section>
+
+    <section class="controls" id="controls" hidden>
+      <button class="btn btn-primary" id="cleanBtn">Clean all files</button>
+      <button class="btn btn-ghost" id="zipBtn" hidden>Download all as .zip</button>
+      <button class="btn btn-ghost" id="clearBtn">Clear list</button>
+    </section>
+
+    <section class="results" id="results" aria-live="polite"></section>
+
+    <section class="disclosure">
+      <button class="disclosure-toggle" id="disclosureToggle" aria-expanded="false">
+        <span>What this tool actually removes</span>
+        <span class="chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="disclosure-body" id="disclosureBody" hidden>
+        <div class="disclosure-grid">
+          <div>
+            <h3>Images (JPEG / PNG / WebP)</h3>
+            <p>The file is redrawn onto a blank canvas and re-exported. Only pixel data survives, so this reliably strips EXIF (GPS, camera model, timestamps, software tag), ICC color profiles, XMP, IPTC, and embedded thumbnails.</p>
+            <p class="caveat">Trade-off: the image is recompressed, so there's a small, usually invisible quality loss.</p>
+          </div>
+          <div>
+            <h3>PDF</h3>
+            <p>Clears the document info dictionary (title, author, subject, producer, creator, dates), removes the XMP metadata stream, and strips embedded files, attachments, and open-action JavaScript where present.</p>
+            <p class="caveat">Limitation: form field data, digital signatures, and content baked into page objects (like a scanned watermark) are not touched. For those, a desktop tool such as ExifTool or MAT2 goes further.</p>
+          </div>
+          <div>
+            <h3>Not yet supported</h3>
+            <p>TIFF, HEIC, GIF, Office files (.docx/.xlsx/.pptx), audio, and video. These are flagged as unsupported rather than silently passed through.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Made by Aryan Giri</p>
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
