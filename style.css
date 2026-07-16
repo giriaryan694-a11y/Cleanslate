@@ -179,6 +179,24 @@ h1 {
   .redaction-bar.sweep { animation: none; opacity: 0; }
 }
 
+/* --- inspect link (external companion tool) --- */
+.inspect-link {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 14px 2px 0;
+}
+.inspect-link a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.inspect-link a:hover { color: var(--accent-strong); }
+.inspect-note {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
 /* --- controls --- */
 .controls {
   display: flex;
